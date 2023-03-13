@@ -1,71 +1,35 @@
-// -------- Obtencion del boton y del contenedor de las nuevas tarjetas --------
-const botonEnter = document.querySelector("#nuevaCard");
-const contenedor = document.getElementById("contenedor");
+// Seleccionar el formulario y el contenedor de la tarjeta
+const form = document.querySelector("#myForm");
+const cardContainer = document.querySelector("#cardContainer");
 
-// -------- El boton que agrega las nuevas tarjetas --------
-function nuevaTarjeta() {
-  const elemento = `
-                  <div class="col-12 col-md-6 col-lg-4" >
-                    <div class="card" style="width: 18rem;">
-                      <img class="card-img-top" src="./img/img.png" alt="Card image cap">
-                      <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                          content.</p>
-                        <a href="#" class="btn btn-primary">Drop</a>
-                        <a href="#">
-                          <button id="myBtn" class="btn btn-primary md")>More</button>
-                        </a>
-                        <div id="myModal" class="modal">
-                          <div class="modal-content">
-                            <span class="close">&times;</span>
-                            <form id="myForm">
-                                <input type="number" placeholder="Enter week" id="weekInput">
-                                <input type="number" placeholder="Enter years" id="yearInput">
-                                <div>
-                                <textarea type="text"placeholder="Description" rows="3" id="descInput"></textarea>
-                                </div>
-                                <input type="color" placeholder="Enter your color" id="colorInput">
-                                <button type="submit" class="btn btn-primary">Add</button>
-                            </form>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                    `;
-  contenedor.insertAdjacentHTML("beforeend", elemento); //Inserta el elemento en la lista antes del final en el html
+// Agregar un escuchador de eventos para el formulario
+form.addEventListener("submit", (event) => {
+  // Prevenir que el formulario se envíe
+  event.preventDefault();
 
-  // -------- Obtencion del modal --------
-  let modal = document.getElementById("myModal");
-  console.log(modal);
+  // Capturar los valores de los campos de entrada
+  const week = document.querySelector("#weekInput").value;
+  const year = document.querySelector("#yearInput").value;
+  const desc = document.querySelector("#descInput").value;
+  const color = document.querySelector("#colorInput").value;
 
-  // //  -------- Obtencion del boton que abrira el modal --------
-  let btn = document.querySelectorAll(".md");
+  // Crear un nuevo elemento HTML para la tarjeta
+  const card = document.createElement("div");
+  card.classList.add("card");
+  card.style.backgroundColor = color;
+  card.innerHTML = `
+    <h2>Week ${week}, ${year}</h2>
+    <p>${desc}</p>
+  `;
 
-  // //  -------- Obtencion del span--------
-  let span = document.getElementsByClassName("close")[0];
+  // Agregar la tarjeta al contenedor
+  cardContainer.appendChild(card);
 
-  // //  -------- Boton para abrir el modal --------
-  btn.forEach((boton) => {
-    boton.addEventListener("click", () => {
-      modal.style.display = "block";
-    });
-  });
+  // Limpiar los valores del formulario
+  form.reset();
 
-  //  -------- Cerrar con la X --------
-  span.onclick = function () {
-    modal.style.display = "none";
-  };
-
-  //  -------- Si haces click fuera del modal lo cierras tambien --------
-  window.onclick = function (event) {
-    if (event.target == modal) {
-      modal.style.display = "none";
-    }
-  };
-}
-
-botonEnter.addEventListener("click", () => {
-  nuevaTarjeta();
+  // Cerrar el modal después de agregar la tarjeta
+  const modal = document.querySelector("#myModal");
+  const modalInstance = bootstrap.Modal.getInstance(modal);
+  modalInstance.hide();
 });
