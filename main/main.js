@@ -19,7 +19,15 @@ function nuevaTarjeta() {
                         <div id="myModal" class="modal">
                           <div class="modal-content">
                             <span class="close">&times;</span>
-                            <p>Some text in the Modal..</p>
+                            <form id="myForm">
+                                <input type="number" placeholder="Enter week" id="weekInput">
+                                <input type="number" placeholder="Enter years" id="yearInput">
+                                <div>
+                                <textarea type="text"placeholder="Description" rows="3" id="descInput"></textarea>
+                                </div>
+                                <input type="color" placeholder="Enter your color" id="colorInput">
+                                <button type="submit" class="btn btn-primary">Add</button>
+                            </form>
                           </div>
                         </div>
                       </div>
